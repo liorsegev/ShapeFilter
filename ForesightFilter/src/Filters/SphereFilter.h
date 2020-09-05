@@ -12,8 +12,5 @@ public:
 	SphereFilter() {};
 	~SphereFilter() {};
 	bool FilterShape(Sphere * i_ShapeToFilter, TwoWaysColor * io_Color, const std::string & ImagePath) override;
-
-private:
-	void ThreshaholdSphere(Sphere * i_ShapeToFilter, TwoWaysColor * io_Color, cv::Mat image);
 };
 
