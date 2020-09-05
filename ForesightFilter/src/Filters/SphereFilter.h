@@ -5,7 +5,8 @@
 #include "..\Shapes\Sphere.h"
 #include "BaseFilter.h"
 #include "opencv2\imgproc.hpp"
-#include "..\TwoWaysColor.h"
+#include "..\Colors\TwoWaysColor.h"
+
 class SphereFilter : public BaseFilter<Sphere, TwoWaysColor>
 {
 public:

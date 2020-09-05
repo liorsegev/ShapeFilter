@@ -1,5 +1,6 @@
 #pragma once
-#include "Colors\BaseColor.h"
+#include "BaseColor.h"
+
 class TwoWaysColor 
 {
 public:

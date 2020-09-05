@@ -1,7 +1,7 @@
-#include "FilterFactory\FiltersFactory.h"
-#include "Colors\BaseColor.h"
-#include "Shapes\Sphere.h"
-#include "Filters\SphereFilter.h"
+#include "src\FilterFactory\FiltersFactory.h"
+#include "src\Colors\BaseColor.h"
+#include "src\Shapes\Sphere.h"
+#include "src\Filters\SphereFilter.h"
 #include "opencv2\highgui.hpp"
 #include <iostream>
 
