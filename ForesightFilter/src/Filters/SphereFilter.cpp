@@ -11,7 +11,7 @@ bool SphereFilter::FilterShape(Sphere * i_ShapeToFilter, TwoWaysColor * io_Color
 	
 		cv::String cvstring = ImagePath;
 		cv::Mat image, imagegry;
-		image = cv::imread(cvstring, CV_LOAD_IMAGE_COLOR);
+		image = cv::imread(cvstring, cv::IMREAD_COLOR);
 	
 		if (!image.data)                              // Check for invalid input
 		{
@@ -19,14 +19,14 @@ bool SphereFilter::FilterShape(Sphere * i_ShapeToFilter, TwoWaysColor * io_Color
 			return -1;
 		}
 		// Convert it to gray
-		cv::cvtColor(image, imagegry, CV_BGR2GRAY);
+		cv::cvtColor(image, imagegry,cv::COLOR_BGR2GRAY);
 	
 		// Reduce the noise so we avoid false circle detection
 		cv::GaussianBlur(imagegry, imagegry, cv::Size(9, 9), 2, 2);
 	
 		std::vector<cv::Vec3f> circles;
 	
-		cv::HoughCircles(imagegry, circles, CV_HOUGH_GRADIENT, 1, imagegry.rows / 8, 200, 100, 0, 0);
+		cv::HoughCircles(imagegry, circles,cv::HOUGH_GRADIENT, 1, imagegry.rows / 8, 200, 100, 0, 0);
 	
 		cv::Mat img_bw = imagegry > 160;
 
@@ -55,12 +55,12 @@ bool SphereFilter::FilterShape(Sphere * i_ShapeToFilter, TwoWaysColor * io_Color
 			io_Color->SetInColor(BaseColor(color[0], color[1], color[2]));
 			color = img_bw.at<cv::Vec3b>(uchar(loc.m_Y), uchar(loc.m_X-radius));
 			io_Color->SetOutColor(BaseColor(color[0], color[1], color[2]));
+			
+			cv::putText(img_bw, "Color Of This Text Is The Outside Color", cv::Point(loc.m_X - radius, loc.m_Y),
+				cv::FONT_HERSHEY_SIMPLEX, 0.8, cv::Scalar(io_Color->GetOutColor().GetRed(), io_Color->GetOutColor().GetGreen(), io_Color->GetOutColor().GetBlue()), 1);
 
-			cv::putText(img_bw, "Color Of This Text Is The Outside Color", cvPoint(loc.m_X - radius, loc.m_Y),
-				CV_FONT_HERSHEY_SIMPLEX, 0.8, cvScalar(io_Color->GetOutColor().GetRed(), io_Color->GetOutColor().GetGreen(), io_Color->GetOutColor().GetBlue()), 1, CV_AA);
-
-			cv::putText(img_bw, "Color Of This Text Is The Inside Color", cvPoint(loc.m_X - radius, loc.m_Y - radius - 10),
-				CV_FONT_HERSHEY_SIMPLEX, 0.8, cvScalar(io_Color->GetInColor().GetRed(), io_Color->GetInColor().GetGreen(), io_Color->GetInColor().GetBlue()), 1, CV_AA);
+			cv::putText(img_bw, "Color Of This Text Is The Inside Color", cv::Point(loc.m_X - radius, loc.m_Y - radius - 10),
+				cv::FONT_HERSHEY_SIMPLEX, 0.8, cv::Scalar(io_Color->GetInColor().GetRed(), io_Color->GetInColor().GetGreen(), io_Color->GetInColor().GetBlue()), 1);
 
 
 			break;
@@ -69,10 +69,10 @@ bool SphereFilter::FilterShape(Sphere * i_ShapeToFilter, TwoWaysColor * io_Color
 
 	
 
-		cv::namedWindow("Colored", CV_WINDOW_AUTOSIZE);
+		cv::namedWindow("Colored", cv::WINDOW_AUTOSIZE);
 		cv::imshow("Colored", image);
 
-		cv::namedWindow("Black & White Color", CV_WINDOW_AUTOSIZE);
+		cv::namedWindow("Black & White Color", cv::WINDOW_AUTOSIZE);
 		cv::imshow("Black & White Color", img_bw);
 		
 		

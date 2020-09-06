@@ -50,6 +50,10 @@ inline BaseFilter<DerivedShape, DerivedColor>* FiltersFactory::GetShapeFilter(co
 		filter = new SphereFilter();
 	
 	}
+	else
+	{
+		filter = nullptr;
+	}
 
 	return filter;
 }
